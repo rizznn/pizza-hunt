@@ -36,7 +36,11 @@ const PizzaSchema = new Schema({
 
 // get total count of comments and replies on retrieval
 PizzaSchema.virtual('commentCount').get(function() {
-    return this.comments.length;
+  // .reduce() method to tally up the total of every comment with its replies. 
+  // .reduce() takes two parameters, an accumulator(total) and a currentValue(comment)
+  // As .reduce() walks through the array, it passes the two parameters into the function
+    // with the return of the function - revising the total for the next iteration through the array
+  return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);
 });
   
 // create the Pizza model using the PizzaSchema
